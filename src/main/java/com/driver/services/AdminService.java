@@ -1,12 +1,18 @@
 package com.driver.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.driver.model.Admin;
 import com.driver.model.Customer;
 import com.driver.model.Driver;
+import com.driver.repository.AdminRepository;
+import com.driver.repository.CustomerRepository;
+import com.driver.repository.DriverRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public interface AdminService {
+
 
 	public void adminRegister(Admin admin);
 
@@ -15,6 +21,6 @@ public interface AdminService {
 	public void deleteAdmin(int adminId);
 
 	public List<Driver> getListOfDrivers();
-	
+
 	public List<Customer> getListOfCustomers();
 }
