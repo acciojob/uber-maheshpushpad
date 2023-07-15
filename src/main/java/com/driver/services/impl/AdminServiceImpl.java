@@ -1,11 +1,11 @@
 package com.driver.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import com.driver.services.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.stereotype.Service;
 
 import com.driver.model.Admin;
@@ -36,25 +36,27 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public Admin updatePassword(Integer adminId, String password) {
 		//Update the password of admin with given id
-		Optional<Admin> optionalAdmin=adminRepository1.findById(adminId);
-		if (optionalAdmin.isPresent()){
-			Admin admin=optionalAdmin.get();
-			admin.setPassword(password);
-			return adminRepository1.save(admin);
-		}
-		return null;
+		Optional<Admin> admin= adminRepository1.findById(adminId);
+		if(admin==null) return null;
+		Admin savedAdmin=new Admin();
+		savedAdmin.setPassword(password);
+		savedAdmin.setAdminId(adminId);
+		return savedAdmin;
+
 	}
 
 	@Override
 	public void deleteAdmin(int adminId){
 		// Delete admin without using deleteById function
-		if (adminRepository1.existsById(adminId)) adminRepository1.deleteById(adminId);
+		adminRepository1.deleteById(adminId);
+
 	}
 
 	@Override
 	public List<Driver> getListOfDrivers() {
 		//Find the list of all drivers
 		return driverRepository1.findAll();
+
 	}
 
 	@Override
