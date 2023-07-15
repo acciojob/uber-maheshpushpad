@@ -1,30 +1,27 @@
 package com.driver.model;
-
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-
+import java.util.*;
 @Entity
+@Table(name = "drivers")
 public class Driver {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int driverId;
+    @Column(unique = true, nullable = false)
     private String mobile;
+    @Column(unique = true, nullable = false)
     private String password;
-
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "driver",cascade = CascadeType.ALL)
     private Cab cab;
-
     @OneToMany(mappedBy = "driver",cascade = CascadeType.ALL)
     private List<TripBooking> tripBookingList = new ArrayList<>();
 
-    public Driver() {
+    public List<TripBooking> getTripBookingList() {
+        return tripBookingList;
     }
 
-    public Driver(int driverId, String mobile, String password) {
-        this.driverId = driverId;
-        this.mobile = mobile;
-        this.password = password;
+    public void setTripBookingList(List<TripBooking> tripBookingList) {
+        this.tripBookingList = tripBookingList;
     }
 
     public int getDriverId() {
@@ -57,13 +54,5 @@ public class Driver {
 
     public void setCab(Cab cab) {
         this.cab = cab;
-    }
-
-    public List<TripBooking> getTripBookingList() {
-        return tripBookingList;
-    }
-
-    public void setTripBookingList(List<TripBooking> tripBookingList) {
-        this.tripBookingList = tripBookingList;
     }
 }
